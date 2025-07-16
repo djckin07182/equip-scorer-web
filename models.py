@@ -15,9 +15,9 @@ class Equipment:
     traits: Dict[str, Trait]  # key: 詞條1 / 詞條2 / 詞條3
 
     @staticmethod
-    def from_raw_input(part: str, defense: float, trait_inputs: Dict[str, Dict[str, Optional[float]]]) -> "Equipment":
+    def from_raw_input(part: str, trait_inputs: Dict[str, Dict[str, Optional[float]]]) -> "Equipment":
         traits = {}
         for field, trait_dict in trait_inputs.items():
             for name, value in trait_dict.items():
                 traits[field] = Trait(field=field, name=name, value=value)
-        return Equipment(part=part, defense=defense, traits=traits)
+        return Equipment(part=part, 
