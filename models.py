@@ -20,4 +20,4 @@ class Equipment:
         for field, trait_dict in trait_inputs.items():
             for name, value in trait_dict.items():
                 traits[field] = Trait(field=field, name=name, value=value)
-        return Equipment(part=part, 
+        return Equipment(part=part, traits=traits)
