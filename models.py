@@ -1,23 +1,21 @@
 
 from dataclasses import dataclass
-from typing import Dict, Optional
 
 @dataclass
 class Trait:
-    field: str  # 詞條1 / 詞條2 / 詞條3
+    field: str
     name: str
-    value: Optional[float]
+    value: float
 
 @dataclass
 class Equipment:
     part: str
-    defense: float
-    traits: Dict[str, Trait]  # key: 詞條1 / 詞條2 / 詞條3
+    traits: dict
 
     @staticmethod
-    def from_raw_input(part: str, defense: float, trait_inputs: Dict[str, Dict[str, Optional[float]]]) -> "Equipment":
+    def from_raw_input(part: str, trait_inputs: dict):
         traits = {}
-        for field, trait_dict in trait_inputs.items():
-            for name, value in trait_dict.items():
+        for field, trait_data in trait_inputs.items():
+            for name, value in trait_data.items():
                 traits[field] = Trait(field=field, name=name, value=value)
-        return Equipment(part=part, defense=defense, traits=traits)
+        return Equipment(part=part, traits=traits)
