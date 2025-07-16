@@ -10,7 +10,8 @@ class Trait:
 
 @dataclass
 class Equipment:
-    part: str    traits: Dict[str, Trait]  # key: 詞條1 / 詞條2 / 詞條3
+    part: str
+    traits: Dict[str, Trait]  # key: 詞條1 / 詞條2 / 詞條3
 
     @staticmethod
     def from_raw_input(part: str, trait_inputs: Dict[str, Dict[str, Optional[float]]]) -> "Equipment":
