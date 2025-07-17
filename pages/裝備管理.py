@@ -1,3 +1,4 @@
+
 import streamlit as st
 import json
 import pandas as pd
@@ -31,7 +32,24 @@ if st.button("⬇️ 匯出成績 CSV"):
         equipment = Equipment.from_raw_input(data["part"], data["trait_inputs"])
         score, _ = scorer.score(equipment, weights=data["weights"])
         pr = scorer.calculate_pr(equipment)
-        records.append({"名稱": name, "部位": data["part"], "總分": round(score, 2), "PR": pr})
+
+        traits = []
+        for field, trait_dict in data["trait_inputs"].items():
+            for t_name, t_value in trait_dict.items():
+                trait_key = f"{data['part']}|{field}|{t_name}"
+                if t_value is not None and trait_key in scorer.trait_info:
+                    min_val = scorer.trait_info[trait_key].get("min")
+                    max_val = scorer.trait_info[trait_key].get("max")
+                    if min_val is not None and max_val is not None and min_val <= t_value <= max_val:
+                        traits.append(f"{field}: {t_name} +{t_value}")
+
+        records.append({
+            "名稱": name,
+            "部位": data["part"],
+            "總分": round(score, 2),
+            "PR": pr,
+            "詞條": "｜".join(traits)
+        })
 
     if records:
         df = pd.DataFrame(records)
@@ -50,7 +68,24 @@ if st.checkbox("📊 顯示已儲存裝備清單", value=True):
             equipment = Equipment.from_raw_input(data["part"], data["trait_inputs"])
             score, _ = scorer.score(equipment, weights=data["weights"])
             pr = scorer.calculate_pr(equipment)
-            table.append({"名稱": name, "部位": data["part"], "總分": round(score, 2), "PR": pr})
+
+            traits = []
+            for field, trait_dict in data["trait_inputs"].items():
+                for t_name, t_value in trait_dict.items():
+                    trait_key = f"{data['part']}|{field}|{t_name}"
+                    if t_value is not None and trait_key in scorer.trait_info:
+                        min_val = scorer.trait_info[trait_key].get("min")
+                        max_val = scorer.trait_info[trait_key].get("max")
+                        if min_val is not None and max_val is not None and min_val <= t_value <= max_val:
+                            traits.append(f"{field}: {t_name} +{t_value}")
+
+            table.append({
+                "名稱": name,
+                "部位": data["part"],
+                "總分": round(score, 2),
+                "PR": pr,
+                "詞條": "｜".join(traits)
+            })
 
         df = pd.DataFrame(table).sort_values("總分", ascending=False)
         st.dataframe(df)
@@ -60,6 +95,6 @@ if st.checkbox("📊 顯示已儲存裝備清單", value=True):
             del st.session_state["saved_equipments"][to_delete]
             st.success(f"已刪除裝備：{to_delete}")
             import sys
-            sys.exit()  # 強制刷新（避免 experimental_rerun）
+            sys.exit()
     else:
         st.info("尚未儲存任何裝備資料。")
