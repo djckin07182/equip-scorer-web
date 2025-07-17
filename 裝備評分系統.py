@@ -50,7 +50,7 @@ if st.button("計算分數"):
             st.markdown(f"- {msg}")
 
 # --- 儲存目前裝備 ---
-name = st.text_input("命名並儲存這組裝備", "")
+name = st.text_input("命名並儲存這件裝備", "")
 if name and st.button("💾 儲存裝備"):
     st.session_state.setdefault("saved_equipments", {})
     st.session_state["saved_equipments"][name] = {
