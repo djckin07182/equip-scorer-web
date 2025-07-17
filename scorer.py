@@ -46,7 +46,7 @@ class EquipmentScorer:
 
         return total_score, max_possible_score
 
-    def calculate_pr(self, equipment: Equipment) -> float:
+    def calculate_pr_without_weight(self, equipment: Equipment) -> float:
         total_ratio = 0
         count = 0
         part = equipment.part
