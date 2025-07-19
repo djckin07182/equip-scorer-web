@@ -37,7 +37,12 @@ for i in range(1, 4):
 if st.button("計算分數"):
     equipment = Equipment.from_raw_input(part, trait_inputs=trait_inputs)
     score, _ = scorer.score(equipment, weights=weights)
-    real_pr = scorer.calculate_pr(equipment)
+    _, real_pr = scorer.score(equipment, weights=weights)
+
+    st.subheader(f"✨ 裝備總分：{score:.2f} 分")
+    st.write(f"📊 PR 百分比：{real_pr * 100:.1f}%")
+    grade = "S" if real_pr >= 0.9 else "A" if real_pr >= 0.75 else "B" if real_pr >= 0.6 else "C"
+    st.write(f"🏅 裝備等級：{grade}")
 
     st.subheader(f"✨ 裝備總分：{score:.2f}")
     pure_grade = "S" if real_pr >= 90 else "A" if real_pr >= 75 else "B" if real_pr >= 60 else "C"
