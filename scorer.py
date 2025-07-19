@@ -44,6 +44,24 @@ class EquipmentScorer:
 
             self.messages.append(f"{field}「{trait.name}」得分：{score:.2f}（權重：{custom_weight}）")
 
+        # === New PR Logic: 有填的詞條一律參與平均 ===
+        total_pr = 0
+        pr_count = 0
+        for field, trait in equipment.traits.items():
+            trait_key = f"{equipment.part}|{field}|{trait.name}"
+            info = self.trait_info.get(trait_key)
+            if info:
+                min_val = info.get("min")
+                max_val = info.get("max")
+                value = trait.value
+                if min_val is not None and max_val is not None and value is not None:
+                    if min_val <= value <= max_val:
+                        pr = (value - min_val) / (max_val - min_val)
+                    else:
+                        pr = 0.0  # 超出範圍視為 0 分
+                    total_pr += pr
+                    pr_count += 1
+        final_pr = total_pr / pr_count if pr_count > 0 else 0.0
         return total_score, max_possible_score
 
     def calculate_pr_without_weight(self, equipment: Equipment) -> float:
