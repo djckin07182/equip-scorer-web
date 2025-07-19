@@ -39,7 +39,6 @@ if st.button("計算分數"):
     score, _ = scorer.score(equipment, weights=weights)
     _, real_pr = scorer.score(equipment, weights=weights)
 
-    st.subheader(f"✨ 裝備總分：{score:.2f} 分")
     st.write(f"📊 PR 百分比：{real_pr * 100:.1f}%")
     grade = "S" if real_pr >= 0.9 else "A" if real_pr >= 0.75 else "B" if real_pr >= 0.6 else "C"
     st.write(f"🏅 裝備等級：{grade}")
