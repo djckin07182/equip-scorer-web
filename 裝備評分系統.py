@@ -39,11 +39,8 @@ if st.button("計算分數"):
     score, _ = scorer.score(equipment, weights=weights)
     _, real_pr = scorer.score(equipment, weights=weights)
 
-    st.write(f"📊 PR 百分比：{real_pr * 100:.1f}%")
     grade = "S" if real_pr >= 0.9 else "A" if real_pr >= 0.75 else "B" if real_pr >= 0.6 else "C"
-    st.write(f"🏅 裝備等級：{grade}")
 
-    st.subheader(f"✨ 裝備總分：{score:.2f}")
     pure_grade = "S" if real_pr >= 90 else "A" if real_pr >= 75 else "B" if real_pr >= 60 else "C"
     pure_color = "green" if real_pr >= 90 else "orange" if real_pr >= 75 else "gray"
     st.markdown(f"📊 <span style='color:{pure_color}; font-size:20px'>PR：{real_pr:.2f}%　[{pure_grade}]</span>", unsafe_allow_html=True)
