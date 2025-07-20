@@ -9,7 +9,7 @@ import numpy as np
 
 st.set_page_config(page_title="OCR 詞條辨識", layout="centered")
 st.title("📷 OCR 圖片辨識")
-st.markdown("📌 **請先使用鍵盤進行螢幕截圖（例如：PrtSc 或 Win + Shift + S）將圖片複製到剪貼簿**，再點擊下方按鈕貼上圖片進行辨識。")
+st.markdown("📌 **請先使用鍵盤進行螢幕截圖（例如：Win + Shift + S）將圖片複製到剪貼簿**，再點擊下方按鈕貼上圖片進行辨識。")
 
 image_data = paste(label="📋 點此貼上剪貼簿中的裝備截圖")
 
