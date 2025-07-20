@@ -1,20 +1,20 @@
 
 from dataclasses import dataclass
-from typing import Dict, Optional
+from typing import Optional, List
 
 @dataclass
 class Trait:
-    field: str  # 詞條1 / 詞條2 / 詞條3
+    field: str
     name: str
     value: Optional[float]
 
 @dataclass
 class Equipment:
     part: str
-    traits: Dict[str, Trait]  # key: 詞條1 / 詞條2 / 詞條3
+    traits: List[Trait]
 
     @staticmethod
-    def from_raw_input(part: str, trait_inputs: Dict[str, Dict[str, Optional[float]]]) -> "Equipment":
+    def from_raw_input(part: str, trait_inputs: dict) -> "Equipment":
         allowed_fields = ['詞條1', '詞條2', '詞條3']
         traits = []
         for field in allowed_fields:
