@@ -12,27 +12,27 @@ class EquipmentScorer:
         max_possible_score = 0
         part = equipment.part
 
-        for field, trait in equipment.traits.items():
+        for trait in equipment.traits:
             if trait.value is None:
                 continue
 
             trait_key = f"{part}|{trait.field}|{trait.name}"
             info = self.trait_info.get(trait_key)
             if not info:
-                self.messages.append(f"{field}「{trait.name}」無對應評分資料")
+                self.messages.append(f"{trait.field}「{trait.name}」無對應評分資料")
                 continue
 
             min_val = info.get("min")
             max_val = info.get("max")
             default_weight = info.get("weight", 1.0)
-            custom_weight = weights.get(field, default_weight) if weights else default_weight
+            custom_weight = weights.get(trait.field, default_weight) if weights else default_weight
 
             if min_val is None or max_val is None:
-                self.messages.append(f"{field}「{trait.name}」缺少 min/max 設定")
+                self.messages.append(f"{trait.field}「{trait.name}」缺少 min/max 設定")
                 continue
 
             if trait.value < min_val or trait.value > max_val:
-                self.messages.append(f"{field}「{trait.name}」超出範圍，未計入分數")
+                self.messages.append(f"{trait.field}「{trait.name}」超出範圍，未計入分數")
                 continue
 
             ratio = (trait.value - min_val) / (max_val - min_val)
@@ -42,15 +42,15 @@ class EquipmentScorer:
             total_score += score
             max_possible_score += max_score
 
-            self.messages.append(f"{field}「{trait.name}」得分：{score:.2f}（權重：{custom_weight}）")
+            self.messages.append(f"{trait.field}「{trait.name}」得分：{score:.2f}（權重：{custom_weight}）")
 
         # === 修正版 PR: 有填就算，無資料或超出範圍視為 0 ===
         total_pr = 0
         pr_count = 0
-        for field, trait in equipment.traits.items():
+        for trait in equipment.traits:
             pr = 0.0
             if trait.value is not None:
-                trait_key = f"{equipment.part}|{field}|{trait.name}"
+                trait_key = f"{equipment.part}|{trait.field}|{trait.name}"
                 info = self.trait_info.get(trait_key)
                 if info:
                     min_val = info.get("min")
@@ -67,7 +67,7 @@ class EquipmentScorer:
         count = 0
         part = equipment.part
 
-        for field, trait in equipment.traits.items():
+        for trait in equipment.traits:
             if trait.value is None:
                 continue
 
