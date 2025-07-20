@@ -34,4 +34,4 @@ if image_data:
             score = 0.0
         st.markdown(f"- **{text}**（信心分數：{score:.2f}）")
 else:
-    st.info("請先使用鍵盤截圖（如 PrtSc 或 Win+Shift+S）將畫面複製，再點擊上方按鈕貼上圖片。")
+    st.info("請先使用鍵盤截圖（Win+Shift+S）將畫面複製，再點擊上方按鈕貼上圖片。")
