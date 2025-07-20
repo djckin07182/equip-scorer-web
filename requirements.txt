@@ -4,4 +4,4 @@ st_img_pastebutton
 pandas
 paddleocr
 paddlepaddle
-opencv-python
+opencv-python-headless
