@@ -1,1 +1,6 @@
 streamlit
+Pillow
+st_img_pastebutton
+pandas
+paddleocr
+paddlepaddle
