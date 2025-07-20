@@ -15,8 +15,12 @@ class Equipment:
 
     @staticmethod
     def from_raw_input(part: str, trait_inputs: Dict[str, Dict[str, Optional[float]]]) -> "Equipment":
-        traits = {}
-        for field, trait_dict in trait_inputs.items():
-            for name, value in trait_dict.items():
-                traits[field] = Trait(field=field, name=name, value=value)
+        allowed_fields = ['詞條1', '詞條2', '詞條3']
+        traits = []
+        for field in allowed_fields:
+            if field not in trait_inputs:
+                continue
+            data = trait_inputs[field]
+            for name, value in data.items():
+                traits.append(Trait(field=field, name=name, value=value))
         return Equipment(part=part, traits=traits)
