@@ -31,7 +31,7 @@ if st.button("⬇️ 匯出成績 CSV"):
     for name, data in st.session_state["saved_equipments"].items():
         equipment = Equipment.from_raw_input(data["part"], data["trait_inputs"])
         score, _ = scorer.score(equipment, weights=data["weights"])
-        pr = scorer.calculate_pr(equipment)
+        pr = scorer.calculate_pr_without_weight(equipment)
 
         traits = []
         for field, trait_dict in data["trait_inputs"].items():
