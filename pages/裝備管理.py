@@ -12,7 +12,7 @@ scorer = EquipmentScorer()
 st.session_state.setdefault("saved_equipments", {})
 
 # --- 匯入 JSON ---
-uploaded = st.file_uploader("⬆️ 匯入 JSON 裝備資料，重覆匯入請重新整理頁面後再匯入", type="json", key="uploaded_file_buffer")
+uploaded = st.file_uploader("⬆️ 匯入 JSON 裝備資料（如需重覆匯入，請重新整理頁面後再匯入)", type="json", key="uploaded_file_buffer")
 
 if uploaded and not st.session_state.get("imported_once"):
     try:
