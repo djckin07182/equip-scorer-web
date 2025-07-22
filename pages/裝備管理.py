@@ -12,21 +12,17 @@ scorer = EquipmentScorer()
 st.session_state.setdefault("saved_equipments", {})
 
 # --- 匯入 JSON ---
-uploaded = st.file_uploader("⬆️ 匯入 JSON 裝備資料", type="json", )
-if uploaded:
-    st.info("📄 已選擇檔案：{}".format(uploaded.name))
-    if st.button("📥 匯入這個檔案", key="trigger_import"):
-        try:
-            imported = json.load(uploaded)
-            cleaned = {k.strip(): v for k, v in imported.items()}
-            st.session_state["saved_equipments"] = cleaned
-            st.success("✅ 匯入成功，資料已加入")
-        except Exception as e:
-            st.error(f"❌ 匯入失敗：{e}")
+uploaded = st.file_uploader("⬆️ 匯入 JSON 裝備資料", type="json", key="uploaded_file_buffer")
 
-uploaded = st.file_uploader("⬆️ 匯入 JSON 裝備資料", type="json", )
-
-
+if uploaded and not st.session_state.get("imported_once"):
+    try:
+        imported = json.load(uploaded)
+        cleaned = {k.strip(): v for k, v in imported.items()}
+        st.session_state["saved_equipments"] = cleaned
+        st.session_state["imported_once"] = True
+        st.success("✅ 匯入成功，資料已加入")
+    except Exception as e:
+        st.error(f"❌ 匯入失敗：{e}")
 
 # --- 匯出 JSON ---
 if st.download_button("⬇️ 匯出 JSON", json.dumps(st.session_state["saved_equipments"], ensure_ascii=False), file_name="裝備資料.json"):
